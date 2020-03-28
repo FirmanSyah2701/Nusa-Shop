@@ -13,6 +13,7 @@
 
 Route::get('/','HomeController@index');
 
+Route::get('pembeli/login', 'LoginController@showLoginPembeli')->name('login');
 Route::get('admin/login', 'LoginController@showLogin')->name('login');
 Route::post('admin/Checklogin', 'LoginController@login')->name('loginAdmin');
 Route::get('admin/logout', 'LoginController@logout')->name('logout');

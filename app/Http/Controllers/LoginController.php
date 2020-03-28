@@ -18,6 +18,12 @@ class LoginController extends Controller
             return view('admin.login');
         }
     }
+
+    public function showLoginPembeli(Request $request){
+        
+            return view('layouts.login');
+        
+    }
     
     public function login(Request $request){
         $auth = auth()->guard('admin');
