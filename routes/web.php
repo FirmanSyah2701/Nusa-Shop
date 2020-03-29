@@ -12,6 +12,9 @@
 */
 
 Route::get('/','HomeController@index');
+Route::get('tentang','HomeController@tentang');
+Route::get('detailproduk','HomeController@detailproduk');
+Route::get('daftar','HomeController@daftar');
 
 Route::get('pembeli/login', 'LoginController@showLoginPembeli')->name('login');
 Route::get('admin/login', 'LoginController@showLogin')->name('login');
