@@ -78,7 +78,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{route('addProduct')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row">
                     <label for="" class="col-sm-3 col-form-label">Kode Barang</label>
@@ -109,7 +109,7 @@
                 <div class="form-group row">
                     <label for="" class="col-sm-3 col-form-label">Foto Barang</label>
                     <div class="col-sm-9">
-                        <input type="file" name="photo" class="form-control">
+                        <input type="file" name="photo">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Save changes</button>
@@ -121,4 +121,66 @@
     </div>
   </div>
   <!-- modal tambah -->
+
+  <!-- modal ubah -->
+  @foreach ($products as $data)
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+  aria-labelledby="editModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalTitle">Tambah Barang</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="{{route('product.update', $data->product_code)}}" method="POST" enctype="multipart/form-data">
+              @csrf
+              @method('PATCH')
+              <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Kode Barang</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="product_code" 
+                      placeholder="Masukkan kode barang" disabled value="{{$data->product_code}}">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Nama Barang</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" name="name_product" 
+                        placeholder="nama barang" value="{{$data->name_product}}">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Harga Barang</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" name="price" 
+                        placeholder="harga barang" value="{{$data->price}}">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Stok</label>
+                  <div class="col-sm-9">
+                      <input type="number" min="0" name="qty" class="form-control" value="{{$data->qty}}">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Foto Barang</label>
+                  <div class="col-sm-9">
+                      <input type="file" name="photo">
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+          </form>
+      </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- modal ubah -->
+@endforeach
 @stop

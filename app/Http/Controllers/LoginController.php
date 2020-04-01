@@ -50,6 +50,41 @@ class LoginController extends Controller
         }
     }
 
+    public function showLoginCustomer(Request $request){
+        return view('layouts.login');
+    }
+    
+    public function loginCustomer(Request $request){
+        $auth = auth()->guard('customers');
+
+        $credentials = [
+            'username'  => $request->username,
+            'password'  => $request->password,
+        ];
+
+        $validator = Validator::make($request->all(),[
+                'username'  => 'required|string|exists:admin,username|regex:/^[a-zA-Z ]*$/',
+                'password'  => 'required|string',
+            ], 
+            [
+                'username.required'  => 'Username tidak boleh kosong',
+                'username.exists'    => 'Username salah',
+                'password.required'  => 'Password tidak boleh kosong',
+                'username.regex'     => 'Format username salah'
+            ],
+        );
+
+        if($validator->fails()) {
+            return view('layouts.login')->withErrors($validator);
+        }else{
+            if($auth->attempt($credentials)){
+                $name  = DB::table('customers')->where('username', $request->username)->value('name');
+                Session::put('username', $request->username);
+                return view('layouts.index', compact('name'));
+            }
+        }
+    }
+
     public function logout(Request $request){
         $request->session()->forget('username');
         return redirect()->route('login');

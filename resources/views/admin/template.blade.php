@@ -31,7 +31,7 @@
         Features
       </div>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('listProduct')}}">
+        <a class="nav-link collapsed" href="{{route('product.index')}}">
           <i class="far fa-fw fa-window-maximize"></i>
           <span>Data Barang</span>
         </a>

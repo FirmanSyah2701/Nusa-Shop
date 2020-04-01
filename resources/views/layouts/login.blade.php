@@ -129,7 +129,7 @@
                     </div>
                     </form>
                     <div style="margin-left:15px; ">
-                        Belum punya akun klik &nbsp;<a style="color:white;" href="">daftar</a>
+                        Belum punya akun klik &nbsp; <a style="color:white;" href="">daftar</a>
                     </div>
                 </div>
             </div>
