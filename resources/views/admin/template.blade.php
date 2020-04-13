@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="img/logo/logo.png" rel="icon">
+  <link href="{{url('assets/img/logo/logo.png')}}" rel="icon">
   <title>@yield('title')</title>
   <link href="{{url('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{url('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
@@ -22,7 +22,7 @@
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{route('dashboard')}}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -43,7 +43,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="{{url('admin/customer')}}">
           <i class="fas fa-fw fa-user"></i>
           <span>Data Pelanggan</span>
         </a>
@@ -55,16 +55,18 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="ui-colors.html">
-          <i class="fas fa-fw fa-check-square"></i>
-          <span>Laporan Penjualan</span>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
+          aria-controls="collapseTable">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Laporan</span>
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="ui-colors.html">
-          <i class="fas fa-fw fa-check-square"></i>
-          <span>Laporan Keuangan</span>
-        </a>
+        <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Laporan</h6>
+            <a class="collapse-item" href="simple-tables.html">Laporan Penjualan</a>
+            <a class="collapse-item" href="datatables.html">Laporan Keuangan</a>
+          </div>
+        </div>
       </li>
     </ul>
     <!-- Sidebar -->
@@ -109,7 +111,7 @@
                   Profile
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="">
+                <a class="dropdown-item" href="{{route('logout')}}">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -133,5 +135,22 @@
   <script src="{{url('assets/js/ruang-admin.min.js')}}"></script>
   <script src="{{url('assets/vendor/chart.js/Chart.min.js')}}"></script>
   <script src="{{url('assets/js/demo/chart-area-demo.js')}}"></script>  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script type="text/javascript">
+    /*
+    var formAdd = $('#frmAdd');
+    formAdd.submit {
+      Swal.fire(
+        'Success',
+        'Data Berhasil disimpan',
+        'success'
+      ).then(OK =>{
+        if(OK){
+          window.location.href = "{{route('listProduct')}}";
+        }
+      });
+    }
+    */
+    </script>
 </body>
 </html>

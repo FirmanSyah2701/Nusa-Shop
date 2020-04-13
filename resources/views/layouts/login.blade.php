@@ -82,18 +82,29 @@
 <body style="background: url({{url('assets/img/a.jpg')}}) no-repeat center center fixed;">                            
     <div class="container-fluid">
         <div class="row">
+            <div class="col-md-12">
             <div class="well center-block">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <form action="#" method="post">
+                                @if($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach  
+                                    </ul>  
+                                </div> 
+                                @endif
+                                <form action="{{route('CheckLoginPembeli')}}" method="post">
+                                @csrf
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <span class="glyphicon glyphicon-user"></span>
                                         </div>
-                                        <input type="text" placeholder="Username" id="nim" name="nim" class="form-control">
+                                        <input type="text" placeholder="Username" id="username" name="username" class="form-control">
                                         <div class="input-group-btn">
                                             <button type="button" id="remove" data-val="1" class="btn btn-default btn-md"> <span class="glyphicon glyphicon-remove"></span></button>
                                         </div>
@@ -116,20 +127,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <input type="checkbox" name="check"> Remember Me
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <button type="submit" name="btnSubmit" class="btn btn-lg btn1 btn-block"> Login</button> 
                     </div>
                     </form>
                     <div style="margin-left:15px; ">
-                        Belum punya akun klik &nbsp; <a style="color:white;" href="">daftar</a>
+                        Belum punya akun klik &nbsp; <a style="color:white;" href="{{url('daftar')}}">daftar</a>
                     </div>
                 </div>
             </div>

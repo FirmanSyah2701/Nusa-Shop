@@ -87,13 +87,14 @@
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <form action="#" method="post">
+                                <form action="{{ route('registerPembeli')}}" method="post">
+                                @csrf
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <span class="glyphicon glyphicon-user"></span>
                                         </div>
-                                        <input type="text" placeholder="Nama" id="nim" name="nim" class="form-control">
+                                        <input type="text" placeholder="Nama" name="name" class="form-control">
                                         <div class="input-group-btn">
                                             <button type="button" id="remove" data-val="1" class="btn btn-default btn-md"> <span class="glyphicon glyphicon-remove"></span></button>
                                         </div>
@@ -102,54 +103,40 @@
                             </div>
                         </div>
                         <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <form action="#" method="post">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                        </div>
-                                        <input type="text" placeholder="Alamat" id="nim" name="nim" class="form-control">
-                                        <div class="input-group-btn">
-                                            <button type="button" id="remove" data-val="1" class="btn btn-default btn-md"> <span class="glyphicon glyphicon-remove"></span></button>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <form action="#" method="post">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-user"></span>
+                                                </div>
+                                                <input type="text" placeholder="Number phone" name="number_phone" class="form-control">
+                                                <div class="input-group-btn">
+                                                    <button type="button" id="remove" data-val="1" class="btn btn-default btn-md"> <span class="glyphicon glyphicon-remove"></span></button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <form action="#" method="post">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                        </div>
-                                        <input type="text" placeholder="Number phone" id="nim" name="nim" class="form-control">
-                                        <div class="input-group-btn">
-                                            <button type="button" id="remove" data-val="1" class="btn btn-default btn-md"> <span class="glyphicon glyphicon-remove"></span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <form action="#" method="post">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                        </div>
-                                        <input type="text" placeholder="Username" id="nim" name="nim" class="form-control">
-                                        <div class="input-group-btn">
-                                            <button type="button" id="remove" data-val="1" class="btn btn-default btn-md"> <span class="glyphicon glyphicon-remove"></span></button>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <form action="#" method="post">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-user"></span>
+                                                </div>
+                                                <input type="text" placeholder="Username" name="username" class="form-control">
+                                                <div class="input-group-btn">
+                                                    <button type="button" id="remove" data-val="1" class="btn btn-default btn-md"> <span class="glyphicon glyphicon-remove"></span></button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -180,7 +167,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <button type="submit" name="btnSubmit" class="btn btn-lg btn1 btn-block"> Daftar</button> 
-                    
+                    </div> 
    <script type='text/javascript'>
       $(".reveal").on('click',function() {
        var $pwd = $(".pwd");

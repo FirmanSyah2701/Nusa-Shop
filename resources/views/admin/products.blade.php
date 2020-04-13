@@ -19,14 +19,14 @@
         <div class="card mb-4">
           @if($errors->any())
             <div class="alert alert-danger">
-                <ul>
-                  @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                  @endforeach  
-                </ul>  
-            </div> 
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach  
+              </ul>  
+            </div>     
           @endif
-          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> 
             <h6 class="m-0 font-weight-bold text-primary">Data Barang</h6>
             <button type="button" class="btn btn-primary" data-toggle="modal"
                 data-target="#addModal" id="#modalScroll">Tambah barang</button>
@@ -40,6 +40,8 @@
                     <th>Nama Barang</th>
                     <th>Harga Barang</th>
                     <th>Stok</th>
+                    <th>Deskripsi</th>
+                    <th>Kategori</th>
                     <th>Aksi</th>
                 </tr>
               </thead>
@@ -48,11 +50,13 @@
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $product->product_code }}</td>
-                    <td>{{ $product->name_product }}</td>
+                    <td>{{ $product->product_name }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->qty }}</td>
+                    <td>{{ $product->description }}</td>
+                    <td>{{ $product->category->category_name }}</td>
                     <td> <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#editModal" id="#modalScroll">Edit</button> 
+                            data-target="#edit-data{{$product->product_code}}" id="#modalScroll">Edit</button> 
                     </td>
                 </tr>
                 @endforeach
@@ -78,7 +82,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
+            <form id="frmAdd" action="{{route('product.store')}}" method="POST" enctype="multipart/form-data" role="form">
                 @csrf
                 <div class="form-group row">
                     <label for="" class="col-sm-3 col-form-label">Kode Barang</label>
@@ -89,7 +93,7 @@
                 <div class="form-group row">
                     <label for="" class="col-sm-3 col-form-label">Nama Barang</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="name_product" placeholder="nama barang">
+                        <input type="text" class="form-control" name="product_name" placeholder="nama barang">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -107,80 +111,85 @@
                 </div>
 
                 <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Deskripsi</label>
+                  <div class="col-sm-9">
+                      <textarea name="description" class="form-control"></textarea>
+                  </div>
+              </div>
+  
+                <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Kategori</label>
+                  <div class="col-sm-9">
+                      <select name="category_id" class="form-control">
+                        <option value="">Pilih</option>
+                          @foreach ($categories as $category)
+                            @if ('category_id' == $category->category_id)
+                              <option value="{{$category->category_id}}" selected>{{$category->category_name}}</option>
+                            @else                            
+                              <option value="{{$category->category_id}}">{{$category->category_name}}</option>
+                            @endif
+                          @endforeach  
+                      </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
                     <label for="" class="col-sm-3 col-form-label">Foto Barang</label>
                     <div class="col-sm-9">
-                        <input type="file" name="photo">
+                        <input type="file" name="photo" class="form-control" >
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><span class="fa fa-plus-circle"></span> Tambah data</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal"><span class="fa fa-times-circle"></span> Close</button>
+                </div>
             </form>
         </div>
-        </div>
-        </form>
       </div>
     </div>
   </div>
   <!-- modal tambah -->
 
-  <!-- modal ubah -->
-  @foreach ($products as $data)
-  <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
-  aria-labelledby="editModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalTitle">Tambah Barang</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form action="{{route('product.update', $data->product_code)}}" method="POST" enctype="multipart/form-data">
-              @csrf
-              @method('PATCH')
-              <div class="form-group row">
-                  <label for="" class="col-sm-3 col-form-label">Kode Barang</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="product_code" 
-                      placeholder="Masukkan kode barang" disabled value="{{$data->product_code}}">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label for="" class="col-sm-3 col-form-label">Nama Barang</label>
-                  <div class="col-sm-9">
-                      <input type="text" class="form-control" name="name_product" 
-                        placeholder="nama barang" value="{{$data->name_product}}">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label for="" class="col-sm-3 col-form-label">Harga Barang</label>
-                  <div class="col-sm-9">
-                      <input type="text" class="form-control" name="price" 
-                        placeholder="harga barang" value="{{$data->price}}">
-                  </div>
-              </div>
+@foreach ($products as $data)
+<!-- Modal Ubah Data  -->
+<div id="edit-data{{$data->product_code}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- konten modal-->
+        <div class="modal-content">
+            <!-- heading modal -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">Ubah Data Barang</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- body modal -->
+            <div class="modal-body">
+            <form action="#" class="form-horizontal tasi-form" method="post" enctype="multipart/form-data">
+                
+              <div class="row form-group">
+                <label class="col-sm-4 control-label">Kode barang</label>
+                <div class="col-sm-8">                    
+                  <input type="text" class="form-control" required value="{{$data->product_code}}" disabled>
+                </div>
 
-              <div class="form-group row">
-                  <label for="" class="col-sm-3 col-form-label">Stok</label>
-                  <div class="col-sm-9">
-                      <input type="number" min="0" name="qty" class="form-control" value="{{$data->qty}}">
-                  </div>
-              </div>
+                <div class="row form-group">
+                    <label class="col-sm-4 control-label">Foto</label>
+                    <div class="col-sm-8">                    
+                        <a class="fancybox" href="{{URL::to('/')}}/assets/img/product/{{ $data->photo }}" title="Perbesar"></a>
+                        <input type="file" class="form-control" name="photo" required>
+                        <small class="form-text text-muted">JPG|JPEG|PNG Max 5MB</small>
+                    </div>
+                </div>
 
-              <div class="form-group row">
-                  <label for="" class="col-sm-3 col-form-label">Foto Barang</label>
-                  <div class="col-sm-9">
-                      <input type="file" name="photo">
-                  </div>
-              </div>
-              <button type="submit" class="btn btn-primary">Save changes</button>
-          </form>
-      </div>
-      </div>
-      </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>             
+            </form>
+            </div>        
+        </div>
     </div>
-  </div>
 </div>
-<!-- modal ubah -->
-@endforeach
+@endforeach  
 @stop

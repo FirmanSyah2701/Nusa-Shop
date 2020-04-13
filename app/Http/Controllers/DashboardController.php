@@ -6,7 +6,7 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request){
         if(!$request->session()->exists('username')){
-            return redirect()->route('login');
+            return redirect()->route('loginAdmin');
         }else{
             return view('admin.dashboard');
         }

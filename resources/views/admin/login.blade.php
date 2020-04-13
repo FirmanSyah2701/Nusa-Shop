@@ -42,7 +42,7 @@
                                     Log In...
                                 </div>
                             </div>
-                            <form action="{{route('loginAdmin')}}" method="post">
+                            <form action="{{route('CheckLoginAdmin')}}" method="post">
                                 @csrf
                                 <div class="control">
                                     <input type="text" name="username" class="form-control" placeholder="Username"/>

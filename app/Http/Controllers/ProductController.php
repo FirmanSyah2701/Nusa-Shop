@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Product;
+use App\Category;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view('admin.products', compact('products'))->with('i');
-        //return view('admin.products');        
+        if(!$request->session()->exists('username')){
+            return redirect()->route('loginAdmin');
+        }else{
+            $products   = Product::all();
+            $categories = Category::all();
+            return view('admin.products', compact('products', 'categories'))->with('i');
+        }     
     }
     
     public function store(Request $request)
@@ -19,10 +25,12 @@ class ProductController extends Controller
         $request->validate(
             [
                 'product_code'  => 'required|numeric|max:15',
-                'name_product'  => 'required|string|max:100|regex:/^[a-zA-Z\s]*$/',
+                'product_name'  => 'required|string|max:100|regex:/^[a-zA-Z\s]*$/',
                 'price'         => 'required|numeric',
                 'qty'           => 'required|numeric|max:5',
-                'photo'         => 'required|image|mimes:jpeg,jpg,png,svg|max:2048'
+                'description'   => 'required|string|max:255',
+                'photo'         => 'required|image|mimes:jpeg,jpg,png,svg|max:2048',
+                'category_id'   => 'required'
             ],
             [
                 'required'      => 'Data tidak boleh kosong',
@@ -37,9 +45,11 @@ class ProductController extends Controller
         $photo->move(public_path('assets/img/product'), $new_name);
         $data = [
             'product_code'  => $request->product_code,
-            'name_product'  => $request->name_product,
+            'product_name'  => $request->product_name,
             'price'         => $request->price,
             'qty'           => $request->qty,
+            'description'   => $request->description,
+            'category_id'   => $request->category_id,
             'photo'         => $new_name
         ];
 
@@ -54,11 +64,12 @@ class ProductController extends Controller
         if($photo != ''){
             $request->validate(
                 [
-                    'product_code'  => 'required|numeric|max:15',
-                    'name_product'  => 'required|string|max:100|regex:/^[a-zA-Z\s]*$/',
+                    'product_name'  => 'required|string|max:100|regex:/^[a-zA-Z\s]*$/',
                     'price'         => 'required|numeric',
                     'qty'           => 'required|numeric|max:5',
-                    'photo'         => 'required|image|mimes:jpeg,jpg,png,svg|max:2048'
+                    'description'   => 'required|max:255',
+                    'category_id'   => 'required',
+                    'photo'         => 'image|mimes:jpeg,jpg,png,svg|max:2048'
                 ],
                 [
                     'required'      => 'Data tidak boleh kosong',
@@ -69,14 +80,15 @@ class ProductController extends Controller
             );
 
             $photo_name = rand() .'.'.$photo->getClientOriginalExtension();
-            $photo->move(public_path('assets/img/producct'), $photo_name);
+            $photo->move(public_path('assets/img/product'), $photo_name);
         }else {
             $request->validate(
                 [
-                    'product_code'  => 'required|numeric|max:15',
-                    'name_product'  => 'required|string|max:100|regex:/^[a-zA-Z\s]*$/',
+                    'product_name'  => 'required|string|max:100|regex:/^[a-zA-Z\s]*$/',
                     'price'         => 'required|numeric',
                     'qty'           => 'required|numeric|max:5',
+                    'description'   => 'required|max:255',
+                    'category_id'   => 'required'
                 ],
                 [
                     'required'      => 'Data tidak boleh kosong',
@@ -86,10 +98,12 @@ class ProductController extends Controller
             );
         }
         $data = [
-            'name_product'  => $request->name_product,
+            'product_name'  => $request->product_name,
             'price'         => $request->price,
             'qty'           => $request->qty,
-            'photo'         => $new_name
+            'description'   => $request->description,
+            'category_id'   => $request->category_id,
+            'photo'         => $photo_name
         ];
 
         Product::whereProduct_code($id)->update($data);

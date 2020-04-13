@@ -20,9 +20,11 @@ class LoginController extends Controller
     }
 
     public function showLoginPembeli(Request $request){
-        
+        if($request->session()->exists('username')){
+            return redirect()->route('loginPembeli');
+        }else{
             return view('layouts.login');
-        
+        }
     }
     
     public function login(Request $request){
@@ -69,7 +71,7 @@ class LoginController extends Controller
         ];
 
         $validator = Validator::make($request->all(),[
-                'username'  => 'required|string|exists:admin,username|regex:/^[a-zA-Z ]*$/',
+                'username'  => 'required|exists:customers,username',
                 'password'  => 'required|string',
             ], 
             [
@@ -93,6 +95,11 @@ class LoginController extends Controller
 
     public function logout(Request $request){
         $request->session()->forget('username');
-        return redirect()->route('login');
+        return redirect()->route('loginAdmin');
+    }
+
+    public function logoutPembeli(Request $request){
+        $request->session()->forget('username');
+        return redirect()->route('loginPembeli');
     }
 }
