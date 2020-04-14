@@ -33,22 +33,23 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="section-title">
-					<h2>Trending Ads</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, magnam.</p>
+					<h2>Produk</h2>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-12 col-lg-3">
-				<div class="list-group">
-					<a href="#" class="list-group-item list-group-item-action active">
-					  Cras justo odio
-					</a>
-					<a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-					<a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-					<a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-					<a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-				  </div></div>	
+				<div class="category-sidebar">
+					<div class="widget category-list">
+						<h4 class="widget-header">Kategori</h4>
+						<ul class="category-list">
+							<li><a href="category.html">Lipstik <span>93</span></a></li>
+							<li><a href="category.html">Bedak <span>233</span></a></li>
+							<li><a href="category.html">Parfum  <span>183</span></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>	
 			<!-- offer 01 -->
 			<div class="col-sm-12 col-lg-3">
 				<!-- product card -->
@@ -122,71 +123,35 @@
 	</div>
 </section>
 
-<!-- modal tambah -->
+<!-- modal detail barang -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
 	aria-labelledby="addModalTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
   		<div class="modal-content">
 			<div class="modal-header">
-	  			<h5 class="modal-title" id="addModalTitle">Tambah Barang</h5>
+	  			<h5 class="modal-title" id="addModalTitle">Detail Barang</h5>
 	  			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 	  			</button>
 			</div>
 			<div class="modal-body">
-				<form id="frmAdd" action="{{route('product.store')}}" method="POST" enctype="multipart/form-data" role="form">
-					@csrf
-					<div class="form-group row">
-						<label for="" class="col-sm-3 col-form-label">Kode Barang</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" name="product_code" placeholder="Masukkan kode barang">
-						</div>
+				<div class="row">
+					<div class="col-md-7">
+						<img src="{{url('assets/img/products/products-3.jpg')}}">
 					</div>
-					<div class="form-group row">
-						<label for="" class="col-sm-3 col-form-label">Nama Barang</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" name="product_name" placeholder="nama barang">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="" class="col-sm-3 col-form-label">Harga Barang</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" name="price" placeholder="harga barang">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="" class="col-sm-3 col-form-label">Stok</label>
-						<div class="col-sm-9">
-							<input type="number" min="0" name="qty" class="form-control">
-						</div>
-					</div>
-
-					<div class="form-group row">
-					<label for="" class="col-sm-3 col-form-label">Deskripsi</label>
-					<div class="col-sm-9">
-						<textarea name="description" class="form-control"></textarea>
+					<div class="col-md-5">
+						<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam! </p>
+						Jumlah: <input type="number" >
+						<p> <h4>Harga:</h4></p>	
 					</div>
 				</div>
-
-					<div class="form-group row">
-						<label for="" class="col-sm-3 col-form-label">Foto Barang</label>
-						<div class="col-sm-9">
-							<input type="file" name="photo" class="form-control" >
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-success">
-							<span class="fa fa-plus-circle"></span> Tambah data
-						</button>
-						<button type="button" class="btn btn-info" data-dismiss="modal">
-							<span class="fa fa-times-circle"></span> Close
-						</button>
-					</div>
-				</form>
-			</div>
-  		</div>
+				<div style="float:right">
+					<a class="btn btn-main" href="{{url('cart')}}">Tambahkan keranjang</a>
+					<a class="btn btn-danger" href="{{url('checkout')}}">Buat pesanan</a>
+				</div>
+		  	</div>
+		</div>
 	</div>
 </div>
-<!-- modal tambah -->
+<!-- modal detail barang -->
 @stop

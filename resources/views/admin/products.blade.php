@@ -151,45 +151,88 @@
   <!-- modal tambah -->
 
 @foreach ($products as $data)
-<!-- Modal Ubah Data  -->
-<div id="edit-data{{$data->product_code}}" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- konten modal-->
-        <div class="modal-content">
-            <!-- heading modal -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="mediumModalLabel">Ubah Data Barang</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<div class="modal fade" id="edit-data{{$data->product_code}}" tabindex="-1" role="dialog"
+  aria-labelledby="addModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalTitle">Ubah data Barang</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form id="frmAdd" action="{{route('product.update', $data->product_code)}}" method="POST" enctype="multipart/form-data" role="form">
+              @csrf
+              <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Kode Barang</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="product_code" disabled value="{{$data->product_code}}">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Nama Barang</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" name="product_name" value="{{$data->product_name}}">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Harga Barang</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" name="price" value="{{$data->price}}">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Stok</label>
+                  <div class="col-sm-9">
+                      <input type="number" min="0" name="qty" class="form-control" value="{{$data->qty}}">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="" class="col-sm-3 col-form-label">Deskripsi</label>
+                <div class="col-sm-9">
+                    <textarea name="description" class="form-control">{{$data->description}}</textarea>
+                </div>
             </div>
-            <!-- body modal -->
-            <div class="modal-body">
-            <form action="#" class="form-horizontal tasi-form" method="post" enctype="multipart/form-data">
-                
-              <div class="row form-group">
-                <label class="col-sm-4 control-label">Kode barang</label>
-                <div class="col-sm-8">                    
-                  <input type="text" class="form-control" required value="{{$data->product_code}}" disabled>
-                </div>
 
-                <div class="row form-group">
-                    <label class="col-sm-4 control-label">Foto</label>
-                    <div class="col-sm-8">                    
-                        <a class="fancybox" href="{{URL::to('/')}}/assets/img/product/{{ $data->photo }}" title="Perbesar"></a>
-                        <input type="file" class="form-control" name="photo" required>
-                        <small class="form-text text-muted">JPG|JPEG|PNG Max 5MB</small>
-                    </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3 col-form-label">Kategori</label>
+                <div class="col-sm-9">
+                    <select name="category_id" class="form-control">
+                      <option value="{{$data->category_id}}">{{$data->category_id}}</option>
+                        @foreach ($categories as $category)
+                          @if ('category_id' == $category->category_id)
+                            <option value="{{$category->category_id}}" selected>{{$category->category_name}}</option>
+                          @else                            
+                            <option value="{{$category->category_id}}">{{$category->category_name}}</option>
+                          @endif
+                        @endforeach  
+                    </select>
                 </div>
+              </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Confirm</button>
-                </div>             
-            </form>
-            </div>        
-        </div>
+              <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Foto Barang</label>
+                  <div class="col-sm-9">
+                      <input type="file" name="photo" class="form-control">
+                      <small class="form-text text-muted">JPG|PNG Max 5MB</small>
+                      <a class="fancybox" href="{{URL::to('/')}}/assets/img/product/{{ $data->photo }}" title="Perbesar">
+                          <img class="hvr-pulse img-responsive" src="{{URL::to('/')}}/assets/img/product/{{ $data->photo }}" 
+                            style="width: 290px; margin-top: 10px">
+                          <input type="hidden" name="hidden_photo" value="{{ $data->photo }}">
+                      </a>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-success"><span class="fa fa-plus-circle"></span>Simpan data</button>
+                  <button type="button" class="btn btn-info" data-dismiss="modal"><span class="fa fa-times-circle"></span> Close</button>
+              </div>
+          </form>
+      </div>
     </div>
+  </div>
 </div>
 @endforeach  
 @stop

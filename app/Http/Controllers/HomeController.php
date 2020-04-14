@@ -9,10 +9,22 @@ class HomeController extends Controller
     public function index(){
         return view('layouts.index');
     }
-    public function tentang(){
-        return view('layouts.tentang');
+    public function about(){
+        return view('layouts.about');
     }
     public function daftar(){
         return view('layouts.daftar');
+    }
+    public function cart(){
+        return view('layouts.cart');
+    }
+    public function checkout(){
+        return view('layouts.checkout');
+    }
+    public function payment(){
+        return view('layouts.payment');
+    }
+    public function contact(){
+        return view('layouts.contact');
     }
 }

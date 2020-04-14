@@ -21,7 +21,7 @@
       <div class="row">
         <div class="col-md-12">
           <nav class="navbar navbar-expand-lg navbar-light navigation">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{url('/')}}">
               Nusa Shop
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -31,39 +31,37 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav main-nav ">
                 <li class="nav-item active">
-                  <a class="nav-link" href="index.html">Beranda</a>
+                  <a class="nav-link" href="{{url('/')}}">Beranda</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="index.html">Tentang Toko</a>
+                  <a class="nav-link" href="{{url('about')}}">Tentang Toko</a>
                 </li>
-                <li class="nav-item dropdown dropdown-slide">
-                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Kategori <span><i class="fa fa-angle-down"></i></span>
-                  </a>
-                  <!-- Dropdown list -->
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="about-us.html">About Us</a>
-                    <a class="dropdown-item" href="contact-us.html">Contact Us</a>
-                    <a class="dropdown-item" href="user-profile.html">User Profile</a>
-                    <a class="dropdown-item" href="404.html">404 Page</a>
-                    <a class="dropdown-item" href="package.html">Package</a>
-                    <a class="dropdown-item" href="single.html">Single Page</a>
-                    <a class="dropdown-item" href="store.html">Store Single</a>
-                    <a class="dropdown-item" href="single-blog.html">Single Post</a>
-                    <a class="dropdown-item" href="blog.html">Blog</a>
-                  </div>
+                <li class="nav-item">
+                  <form action="">
+                    <input type="text" placeholder="Cari disini" style="padding:10px;">
+                    <button class="button-head">Cari</button>
+                  </form>  
                 </li>
               </ul>
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                  <a class="nav-link" href="login.html"><div class="fa fa-shopping-cart"></div></a>
+                  <a class="nav-link" href="{{url('cart')}}">Keranjang</a>
+                </li>
+                @if(Session::get('username'))
+                <li class="nav-item">
+                  <a class="nav-link" href="">Profile</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link login-button" href="login.html">Login</a>
+                  <a class="nav-link login-button" href="{{route('logoutPembeli')}}">Logout</a>
+                </li>
+                @else
+                <li class="nav-item">
+                  <a class="nav-link login-button" href="{{route('loginPembeli')}}">Login</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link login-button" href="ad-listing.html">Register</a>
+                  <a class="nav-link login-button" href="{{url('daftar')}}">Register</a>
                 </li>
+                @endif
               </ul>
             </div>
           </nav>
@@ -142,32 +140,15 @@
   <footer class="footer-bottom">
     <!-- Container Start -->
     <div class="container">
-      <div class="row">
-        <div class="col-sm-6 col-12">
-          <!-- Copyright -->
-          <div class="copyright">
-            <p>Copyright © <script>
-                var CurrentYear = new Date().getFullYear()
-                document.write(CurrentYear)
-              </script>. All Rights Reserved, theme by <a class="text-primary" href="https://themefisher.com" target="_blank">themefisher.com</a></p>
-          </div>
+        <!-- Copyright -->
+        <div class="copyright">
+          <p>Copyright © Nusa Shop <script>
+              var CurrentYear = new Date().getFullYear()
+              document.write(CurrentYear)
+              </script>. All Rights Reserved</p>
         </div>
-        <div class="col-sm-6 col-12">
-          <!-- Social Icons -->
-          <ul class="social-media-icons text-right">
-            <li><a class="fa fa-facebook" href="https://www.facebook.com/themefisher" target="_blank"></a></li>
-            <li><a class="fa fa-twitter" href="https://www.twitter.com/themefisher" target="_blank"></a></li>
-            <li><a class="fa fa-pinterest-p" href="https://www.pinterest.com/themefisher" target="_blank"></a></li>
-            <li><a class="fa fa-vimeo" href=""></a></li>
-          </ul>
-        </div>
-      </div>
     </div>
     <!-- Container End -->
-    <!-- To Top -->
-    <div class="top-to">
-      <a id="top" class="" href="#"><i class="fa fa-angle-up"></i></a>
-    </div>
   </footer>
 
   <script src="{{asset('js/app.js')}}"></script>

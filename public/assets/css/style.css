@@ -432,7 +432,7 @@ button {
   font-size: 15px;
   letter-spacing: 1px;
   display: inline-block;
-  padding: 15px 30px;
+  padding: 10px;
   border-radius: 4px;
 }
 
@@ -665,6 +665,22 @@ ul.pagination .active a {
   border: 2px solid #dedede;
   margin-right: 8px;
   padding: 6px 20px !important;
+}
+
+.button-head{
+  border: 2px solid #dedede;
+  margin-right: 8px;
+  padding: 11px 20px !important;
+  background: #5672f9;
+  color: #fff;
+}
+
+.button-register{
+  border: 2px solid #dedede;
+  margin-right: 8px;
+  padding: 11px 20px !important;
+  background: #dd4b39;
+  color: #fff;
 }
 
 .add-button {
@@ -2428,6 +2444,7 @@ article.single-post p {
 .footer-bottom .copyright p {
   color: #c7c7c7;
   margin-bottom: 0;
+  text-align: center;
 }
 
 .social-media-icons {

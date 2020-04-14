@@ -12,7 +12,7 @@
 */
 
 Route::get('/','HomeController@index');
-Route::get('tentang','HomeController@tentang');
+Route::get('about','HomeController@about');
 Route::get('daftar','HomeController@daftar');
 Route::post('pembeli/register', 'CustomerController@store')->name('registerPembeli');
 Route::get('pembeli/login', 'LoginController@showLoginPembeli')->name('loginPembeli');
@@ -28,3 +28,7 @@ Route::resource('product', 'ProductController');
 Route::get('admin/product', 'ProductController@index')->name('listProduct');
 Route::post('/admin/product/addProduct', 'ProductController@store')->name('addProduct');
 Route::get('admin/customer', 'CustomerController@index');
+Route::get('/cart', 'HomeController@cart');
+Route::get('/checkout', 'HomeController@checkout');
+Route::get('/upload_pembayaran', 'HomeController@payment');
+Route::get('/contact', 'HomeController@contact');
