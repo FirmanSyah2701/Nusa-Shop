@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('photo', 255);
             $table->double('price');
             $table->integer('qty');
+            $table->integer('weight');
             $table->string('description', 255);
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('category_id')->on('categories');

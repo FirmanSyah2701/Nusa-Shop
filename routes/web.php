@@ -32,3 +32,8 @@ Route::get('/cart', 'HomeController@cart');
 Route::get('/checkout', 'HomeController@checkout');
 Route::get('/upload_pembayaran', 'HomeController@payment');
 Route::get('/contact', 'HomeController@contact');
+Route::post('/detail/{id}', 'HomeController@detail')->name('detailPost');
+Route::get('/api/provinsi', 'RajaOngkirController@apiRajaOngkir');
+//Route::post('/api/ongkos', 'RajaOngkirController@cost');
+Route::get('/ongkos', 'HomeController@ongkos');
+Route::get('/destination={destination}&weight={weight}&courier={courier}', 'RajaOngkirController@getCost');

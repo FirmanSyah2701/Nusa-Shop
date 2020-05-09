@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateChartsTable extends Migration
+class CreateCartTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateChartsTable extends Migration
      */
     public function up()
     {
-        Schema::create('charts', function (Blueprint $table) {
-            $table->increments('chart_id', 4);
+        Schema::create('cart', function (Blueprint $table) {
+            $table->increments('cart_id', 4);
             $table->string('product_code')->index();
             $table->foreign('product_code')->references('product_code')->on('products');
+            $table->integer('customer_id')->unsigned();
+            $table->foreign('customer_id')->references('customer_id')->on('customers');
             $table->double('subtotal');
         });
     }
@@ -28,6 +30,6 @@ class CreateChartsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('charts');
+        Schema::dropIfExists('cart');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCouriersTable extends Migration
+class CreateCostTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateCouriersTable extends Migration
      */
     public function up()
     {
-        Schema::create('couriers', function (Blueprint $table) {
-            $table->increments('courier_id', 4);
-            $table->string('courier', 100);
+        Schema::create('cost', function (Blueprint $table) {
+            $table->increments('cost_id');
+            $table->string('origin');
+            $table->string('destination');
+            $table->integer('weight');
+            $table->string('courier');
         });
     }
 
@@ -26,6 +29,6 @@ class CreateCouriersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('courier');
+        Schema::dropIfExists('cost');
     }
 }

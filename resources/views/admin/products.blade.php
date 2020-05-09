@@ -82,7 +82,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form id="frmAdd" action="{{route('product.store')}}" method="POST" enctype="multipart/form-data" role="form">
+            <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data" role="form">
                 @csrf
                 <div class="form-group row">
                     <label for="" class="col-sm-3 col-form-label">Kode Barang</label>
@@ -109,6 +109,13 @@
                         <input type="number" min="0" name="qty" class="form-control">
                     </div>
                 </div>
+
+                <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Berat(gram)</label>
+                  <div class="col-sm-9">
+                      <input type="number" min="0" name="weight" class="form-control">
+                  </div>
+              </div>
 
                 <div class="form-group row">
                   <label for="" class="col-sm-3 col-form-label">Deskripsi</label>
@@ -162,8 +169,9 @@
         </button>
       </div>
       <div class="modal-body">
-          <form id="frmAdd" action="{{route('product.update', $data->product_code)}}" method="POST" enctype="multipart/form-data" role="form">
+          <form action="{{route('product.update', $data->product_code)}}" method="POST" enctype="multipart/form-data" role="form">
               @csrf
+              @method('PATCH')
               <div class="form-group row">
                   <label for="" class="col-sm-3 col-form-label">Kode Barang</label>
                   <div class="col-sm-9">
@@ -189,6 +197,13 @@
                       <input type="number" min="0" name="qty" class="form-control" value="{{$data->qty}}">
                   </div>
               </div>
+
+              <div class="form-group row">
+                <label for="" class="col-sm-3 col-form-label">Berat(gram)</label>
+                <div class="col-sm-9">
+                    <input type="number" min="0" name="weight" class="form-control">
+                </div>
+            </div>
 
               <div class="form-group row">
                 <label for="" class="col-sm-3 col-form-label">Deskripsi</label>

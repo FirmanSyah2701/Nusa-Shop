@@ -17,11 +17,12 @@ class CreateCheckoutTable extends Migration
             $table->increments('checkout_id');
             $table->string('product_code')->index();
             $table->foreign('product_code')->references('product_code')->on('products');
-            $table->integer('courier_id')->unsigned();
-            $table->foreign('courier_id')->references('courier_id')->on('couriers');
-            $table->integer('address_id')->unsigned();
-            $table->foreign('address_id')->references('address_id')->on('address');
-            $table->double('price_courier');
+            $table->integer('city_id')->unsigned();
+            $table->foreign('city_id')->references('city_id')->on('city');
+            //$table->double('price_courier');
+            $table->string('courier');
+            $table->string('customer_name');
+            $table->string('full_address');
             $table->double('total_price');
         });
     }

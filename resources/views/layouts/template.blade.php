@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{url('plugins/fancybox/jquery.fancybox.pack.css')}}">
   <link rel="stylesheet" href="{{url('assets/plugins/jquery-nice-select/css/nice-select.css')}}">
   <link rel="stylesheet" href="{{url('assets/plugins/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.css">
   <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
 </head>
 <body>
@@ -161,6 +162,27 @@
   <script src="{{url('assets/plugins/jquery-nice-select/js/jquery.nice-select.min.js')}}"></script>
   <script src="{{url('assets/plugins/fancybox/jquery.fancybox.pack.js')}}"></script>
   <script src="{{url('assets/plugins/smoothscroll/SmoothScroll.min.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/selectize.min.js"></script>
   <script src="{{url('assets/js/scripts.js')}}"></script>
+  <script>
+      function increment(){
+        var value = document.getElementById('qty').value;
+        value = isNaN(value) ? 0 : value;
+        if(value<{{$count}}){
+          value++;
+            document.getElementById('qty').value = value;
+        }
+      }
+
+      function decrement(){
+        var value = document.getElementById('qty').value;
+        value = isNaN(value) ? 0 : value;
+        if(value>1){
+          value--;
+            document.getElementById('qty').value = value;
+        }
+      }
+      //$('select[name="destination"]').on('change', function(){
+  </script>
 </body>
 </html>

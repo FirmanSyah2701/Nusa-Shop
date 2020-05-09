@@ -50,81 +50,38 @@
 					</div>
 				</div>
 			</div>	
+			@foreach ($products as $product)
 			<!-- offer 01 -->
 			<div class="col-sm-12 col-lg-3">
 				<!-- product card -->
-				<a href="" data-toggle="modal" data-target="#addModal" id="#modalScroll">
+				<a href="" data-toggle="modal" data-target="#detailModal-{{$product->product_code}}" id="#modalScroll">
 				<div class="product-item bg-light">		
 					<div class="card">
 						<div class="thumb-content">
-							<div class="price">$200</div>
-							<img class="card-img-top img-fluid" src="{{url('assets/img/products/products-1.jpg')}}" alt="Card image cap">
+							<div class="price">Rp {{ number_format($product->price) }}</div>
+							<img class="card-img-top img-fluid" src="{{URL::to('/')}}/assets/img/product/{{ $product->photo }}" alt="Card image cap">
 						</div>
 						<div class="card-body">
-							<h4 class="card-title">11inch Macbook Air</h4>
+							<h4 class="card-title">{{ $product->product_name }}</h4>
 							<ul class="list-inline product-meta">
 								<li class="list-inline-item">
-									<i class="fa fa-folder-open-o"></i>Electronics
+									<i class="fa fa-folder-open-o"></i> {{ $product->category->category_name }}
 								</li>
 							</ul>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>		
+							<p class="card-text">{{$product->description}}</p>		
 						</div>
 					</div>
 				</div>
 				</a>
 			</div>
-
-			<div class="col-sm-12 col-lg-3">
-				<!-- product card -->
-				<div class="product-item bg-light">
-					<div class="card">
-						<div class="thumb-content">
-							<div class="price">$200</div>
-							<a href="">
-								<img class="card-img-top img-fluid" src="{{url('assets/img/products/products-2.jpg')}}" alt="Card image cap">
-							</a>
-						</div>
-						<div class="card-body">
-							<h4 class="card-title"><a href="">Full Study Table Combo</a></h4>
-							<ul class="list-inline product-meta">
-								<li class="list-inline-item">
-									<a href=""><i class="fa fa-folder-open-o"></i>Furnitures</a>
-								</li>
-							</ul>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>		
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-sm-12 col-lg-3">
-				<!-- product card -->
-				<div class="product-item bg-light">
-					<div class="card">
-						<div class="thumb-content">
-							<div class="price">$200</div>
-							<a href="">
-								<img class="card-img-top img-fluid" src="{{url('assets/img/products/products-3.jpg')}}" alt="Card image cap">
-							</a>
-						</div>
-						<div class="card-body">
-							<h4 class="card-title"><a href="">11inch Macbook Air</a></h4>
-							<ul class="list-inline product-meta">
-								<li class="list-inline-item">
-									<a href=""><i class="fa fa-folder-open-o"></i>Electronics</a>
-								</li>
-							</ul>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!</p>		
-						</div>
-					</div>
-				</div>
-			</div>		
+			@endforeach		
 		</div>
 	</div>
 </section>
 
 <!-- modal detail barang -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+@foreach ($products as $product)
+<div class="modal fade" id="detailModal-{{$product->product_code}}" tabindex="-1" role="dialog"
 	aria-labelledby="addModalTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
   		<div class="modal-content">
@@ -137,21 +94,34 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-7">
-						<img src="{{url('assets/img/products/products-3.jpg')}}">
+						<img src="{{URL::to('/')}}/assets/img/product/{{ $product->photo }}">
 					</div>
 					<div class="col-md-5">
-						<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam! </p>
-						Jumlah: <input type="number" >
-						<p> <h4>Harga:</h4></p>	
+					<form action="{{route('detailPost', $product->product_code)}}" method="POST">
+						@csrf
+						<input type="hidden" name="product_code" value="{{$product->product_code}}">
+						<p> {{$product->description}}  </p>
+						<p>Tersedia: {{$product->qty}}</p>
+						<div class="container">
+							Jumlah:
+							<input style="margin-left:20px; padding:1px;" 
+								type="button" onclick="decrement()" value="-">
+							<input style="width:40%" id="qty" type="number" name="q" max="{{$count}}" min="1" required>
+							<input style="padding:1px;" 
+								type="button" onclick="increment()" value="+">
+						</div>
+						<p> <h2>Harga: Rp {{ number_format($product->price) }}</h2></p>	
 					</div>
 				</div>
 				<div style="float:right">
 					<a class="btn btn-main" href="{{url('cart')}}">Tambahkan keranjang</a>
-					<a class="btn btn-danger" href="{{url('checkout')}}">Buat pesanan</a>
+					<button class="btn btn-danger" type="submit">Buat pesanan</a>
+					</form>
 				</div>
 		  	</div>
 		</div>
 	</div>
 </div>
+@endforeach
 <!-- modal detail barang -->
 @stop

@@ -14,8 +14,9 @@ class ProductController extends Controller
         if(!$request->session()->exists('username')){
             return redirect()->route('loginAdmin');
         }else{
-            $products   = Product::all();
-            $categories = Category::all();
+            //$products   = Product::all();
+            $products     = Product::all();
+            $categories   = Category::all();
             return view('admin.products', compact('products', 'categories'))->with('i');
         }     
     }
@@ -24,10 +25,11 @@ class ProductController extends Controller
     {
         $request->validate(
             [
-                'product_code'  => 'required|numeric|max:15',
+                'product_code'  => 'required|string',
                 'product_name'  => 'required|string|max:100|regex:/^[a-zA-Z\s]*$/',
                 'price'         => 'required|numeric',
-                'qty'           => 'required|numeric|max:5',
+                'qty'           => 'required|numeric',
+                'weight'        => 'required|numeric',
                 'description'   => 'required|string|max:255',
                 'photo'         => 'required|image|mimes:jpeg,jpg,png,svg|max:2048',
                 'category_id'   => 'required'
@@ -48,6 +50,7 @@ class ProductController extends Controller
             'product_name'  => $request->product_name,
             'price'         => $request->price,
             'qty'           => $request->qty,
+            'weight'        => $request->weight,
             'description'   => $request->description,
             'category_id'   => $request->category_id,
             'photo'         => $new_name
@@ -66,7 +69,8 @@ class ProductController extends Controller
                 [
                     'product_name'  => 'required|string|max:100|regex:/^[a-zA-Z\s]*$/',
                     'price'         => 'required|numeric',
-                    'qty'           => 'required|numeric|max:5',
+                    'qty'           => 'required|numeric',
+                    'weight'        => 'required|numeric',
                     'description'   => 'required|max:255',
                     'category_id'   => 'required',
                     'photo'         => 'image|mimes:jpeg,jpg,png,svg|max:2048'
@@ -87,6 +91,7 @@ class ProductController extends Controller
                     'product_name'  => 'required|string|max:100|regex:/^[a-zA-Z\s]*$/',
                     'price'         => 'required|numeric',
                     'qty'           => 'required|numeric|max:5',
+                    'weight'        => 'required|numeric',
                     'description'   => 'required|max:255',
                     'category_id'   => 'required'
                 ],
@@ -101,6 +106,7 @@ class ProductController extends Controller
             'product_name'  => $request->product_name,
             'price'         => $request->price,
             'qty'           => $request->qty,
+            'weight'        => $request->weight,
             'description'   => $request->description,
             'category_id'   => $request->category_id,
             'photo'         => $photo_name
