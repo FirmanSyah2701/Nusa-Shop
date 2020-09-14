@@ -9,17 +9,22 @@ class Checkout extends Model
     protected $table = 'checkout';
     protected $primaryKey = 'checkout_id';
     protected $fillable   = [
-        'product_code', 'city_id', 'courier', 'customer_name', 
-        'full_address', 'total_price'
+        'customer_id', 'city_id', 'courier', 'customer_name', 
+        'full_address', 'number_phone', 'total_price', 
+        'service', 'etd'
     ];
 
     public $timestamps = false;
 
-    public function city(){
-        return $this->belongsTo('App\City', 'city_id');
+    public function customer(){
+        return $this->hasOne('App\Customer', 'customer_id');
     }
 
-    public function product(){
-        return $this->belongsTo('App\Product', 'product_code');
+    public function city(){
+        return $this->hasOne('App\City', 'city_id');
+    }
+
+    public function payment(){
+        return $this->hasOne('App\Payment', 'checkout_id');
     }
 }

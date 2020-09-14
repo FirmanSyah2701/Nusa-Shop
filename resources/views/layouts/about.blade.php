@@ -8,16 +8,16 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="section-title">
+				<div style="text-align: center; margin-bottom:80px;">
 					<h2>Tentang Toko</h2>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-        Toko ini menjual bla bla bla.....
-      </div>
-    </div>
-  </div>
+        		Toko ini menjual alat-alat kosmetik
+      		</div>
+    	</div>
+  	</div>
 </section>
 @stop

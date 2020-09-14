@@ -6,23 +6,24 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 class Customer extends Authenticatable
 {
-    protected $primaryKey = 'customer_id';
+    
+    use Notifiable;
     
     protected $fillable = [
-        'customer_id', 'username', 'password', 'name', 'number_phone', 'address_id'
+        'customer_id', 'username', 'password', 'name', 'number_phone',
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 
     public $timestamps = false;
 
-    protected $hidden = [
-        'password', 'remember_token'
-    ];
-
-    public function setPasswordAttribute($value){
+     public function setPasswordAttribute($value){
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function address(){
-        return $this->belongsTo('App\Address', 'address_id');
+    public function cart(){
+        return $this->belongsTo('App\Cart');
     }
 }

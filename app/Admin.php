@@ -9,16 +9,13 @@ class Admin extends Authenticatable
     use Notifiable;
 
     protected $table = 'admin';
-    protected $fillable = [
-        'username', 'name', 'password'
-    ];
+    protected $fillable = ['username', 'name', 'password'];
+
+    public $increments = false;
+    public $timestamps = false;
 
     protected $primaryKey = 'username';
-    public $increments = false;
-    
-    protected $hidden = [
-        'password', 'remember_token'
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     public function setPasswordAttribute($value){
         $this->attributes['password'] = bcrypt($value);

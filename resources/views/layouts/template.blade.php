@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>@yield('title')</title>
+  
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
   <link rel="stylesheet" href="{{url('asstes/plugins/jquery-ui/jquery-ui.min.css')}}">
   <link rel="stylesheet" href="{{url('assets/plugins/font-awesome/css/font-awesome.min.css')}}">
@@ -16,6 +17,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.css">
   <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
 </head>
+<style>
+  p{
+    color: black;
+  }
+</style>
 <body>
   <section>
     <div class="container">
@@ -25,8 +31,9 @@
             <a class="navbar-brand" href="{{url('/')}}">
               Nusa Shop
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" 
+              data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+              aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -37,31 +44,31 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{url('about')}}">Tentang Toko</a>
                 </li>
-                <li class="nav-item">
-                  <form action="">
-                    <input type="text" placeholder="Cari disini" style="padding:10px;">
-                    <button class="button-head">Cari</button>
-                  </form>  
-                </li>
+                @if(session('customer_id'))
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{url('riwayatCheckout')}}">Riwayat Checkout</a>
+                  </li>
+                @endif
               </ul>
+              
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="{{url('cart')}}">Keranjang</a>
-                </li>
-                @if(Session::get('username'))
-                <li class="nav-item">
-                  <a class="nav-link" href="">Profile</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link login-button" href="{{route('logoutPembeli')}}">Logout</a>
-                </li>
+                @if(session('customer_id'))
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{url('cart')}}">Keranjang</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{url('profile')}}">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link login-button" href="{{route('logoutCustomer')}}">Logout</a>
+                  </li>
                 @else
-                <li class="nav-item">
-                  <a class="nav-link login-button" href="{{route('loginPembeli')}}">Login</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link login-button" href="{{url('daftar')}}">Register</a>
-                </li>
+                  <li class="nav-item">
+                    <a class="nav-link login-button" href="{{route('showLoginCustomer')}}">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link login-button" href="{{route('showRegisterCustomer')}}">Register</a>
+                  </li>
                 @endif
               </ul>
             </div>
@@ -164,25 +171,5 @@
   <script src="{{url('assets/plugins/smoothscroll/SmoothScroll.min.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/selectize.min.js"></script>
   <script src="{{url('assets/js/scripts.js')}}"></script>
-  <script>
-      function increment(){
-        var value = document.getElementById('qty').value;
-        value = isNaN(value) ? 0 : value;
-        if(value<{{$count}}){
-          value++;
-            document.getElementById('qty').value = value;
-        }
-      }
-
-      function decrement(){
-        var value = document.getElementById('qty').value;
-        value = isNaN(value) ? 0 : value;
-        if(value>1){
-          value--;
-            document.getElementById('qty').value = value;
-        }
-      }
-      //$('select[name="destination"]').on('change', function(){
-  </script>
 </body>
 </html>

@@ -515,6 +515,16 @@ button {
   box-shadow: none;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
+.pointer-disabled{
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
 /**
  *
  * Card Styles
@@ -2496,6 +2506,15 @@ article.single-post p {
 
 .top-to a:hover {
   text-decoration: none;
+}
+input::--webkit-outer-spin-button,
+input::--webkit-inner-spin-button{
+  --webkit-appearance: none;
+  margin:0;
+}
+
+input[type=number]{
+  -moz-appearance: textfield;
 }
 
 /*# sourceMappingURL=maps/style.css.map */

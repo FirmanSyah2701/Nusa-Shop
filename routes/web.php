@@ -10,30 +10,59 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/','HomeController@index');
+//  Home 
+Route::get('/','HomeController@index')->name('home');
 Route::get('about','HomeController@about');
-Route::get('daftar','HomeController@daftar');
-Route::post('pembeli/register', 'CustomerController@store')->name('registerPembeli');
-Route::get('pembeli/login', 'LoginController@showLoginPembeli')->name('loginPembeli');
-Route::post('pembeli/checklogin', 'LoginController@loginCustomer')->name('CheckLoginPembeli');
-Route::get('admin/login', 'LoginController@showLogin')->name('loginAdmin');
-Route::post('admin/Checklogin', 'LoginController@login')->name('CheckLoginAdmin');
-Route::get('admin/logout', 'LoginController@logout')->name('logout');
-Route::get('pembeli/logout', 'LoginController@logoutPembeli')->name('logoutPembeli');
-Route::get('admin/dashboard', 'DashboardController@dashboard')->name('dashboard');
-//Route::get('admin/product', 'ProductController@index')->name('listProduct');
-//Route::post('/admin/product/addProduct', 'ProductController@store')->name('addProduct');
+
+//Admin
+Route::get('admin/dashboard', 'AdminController@dashboard')->name('dashboard');
+
+//  Customer
+Route::get('register','CustomerController@showRegister')->name('showRegisterCustomer');
+Route::post('pembeli/register', 'CustomerController@register')->name('registerCustomer');
+Route::get('profile', 'CustomerController@profile');
+Route::put('profileUpdate/{id}', 'CustomerController@profileUpdate')->name('profileUpdate');
+Route::get('admin/customer', 'CustomerController@showAllCustomer');
+
+//  Login
+Route::get('pembeli/login', 'LoginController@showLoginCustomer')->name('showLoginCustomer');
+Route::post('pembeli/login', 'LoginController@loginCustomer')->name('checkLoginCustomer');
+Route::get('admin/login', 'LoginController@showLoginAdmin')->name('loginAdmin');
+Route::post('admin/login', 'LoginController@loginAdmin')->name('CheckLoginAdmin');
+Route::get('admin/logout', 'LoginController@logoutAdmin')->name('logoutAdmin');
+Route::get('pembeli/logout', 'LoginController@logoutCustomer')->name('logoutCustomer');
+
+//  Capital
+Route::get('modal', 'CapitalController@capital')->name('capital');
+Route::post('modalPost', 'CapitalController@capitalPost')->name('capitalPost');
+
+//  Cart
+Route::get('/cart', 'CartController@index');
+Route::post('/tambahKeranjang', 'CartController@store')->name('cartPost');
+Route::post('/addCart', 'CartController@addCart')->name('addCart');
+Route::delete('item/{id}', 'CartController@destroy')->name('deleteItem');
+
+//  Checkout
+Route::post('/checkout', 'CheckoutController@index')->name('checkoutPost');
+Route::get('/checkout', 'CheckoutController@showCheckout')->name('showCheckout');
+Route::get('/riwayatCheckout', 'CheckoutController@showHistoryCheckout')->name('riwayatCheckout');
+
+//  Payment
+Route::put('/payment/{id}', 'PaymentController@paymentPost');
+Route::put('/confirmationUpdate/{id}', 'PaymentController@ConfirmationUpdate');
+Route::get('admin/confirmation', 'PaymentController@confirmation')->name('confirmation');
+Route::get('pembayaran/save/{id}', 'PaymentController@download')->name('download');
+Route::get('penjualan', 'PaymentController@sell');
+
+//  RajaOngkir
+Route::get('/api/provinsi', 'RajaOngkirController@apiRajaOngkir');
+Route::get('/destination={destination}&weight={weight}&courier={courier}', 'RajaOngkirController@getCost');
+
+//  Product
 Route::resource('product', 'ProductController');
 Route::get('admin/product', 'ProductController@index')->name('listProduct');
 Route::post('/admin/product/addProduct', 'ProductController@store')->name('addProduct');
-Route::get('admin/customer', 'CustomerController@index');
-Route::get('/cart', 'HomeController@cart');
-Route::get('/checkout', 'HomeController@checkout');
-Route::get('/upload_pembayaran', 'HomeController@payment');
-Route::get('/contact', 'HomeController@contact');
-Route::post('/detail/{id}', 'HomeController@detail')->name('detailPost');
-Route::get('/api/provinsi', 'RajaOngkirController@apiRajaOngkir');
-//Route::post('/api/ongkos', 'RajaOngkirController@cost');
-Route::get('/ongkos', 'HomeController@ongkos');
-Route::get('/destination={destination}&weight={weight}&courier={courier}', 'RajaOngkirController@getCost');
+Route::get('/showProductById/{id}', 'ProductController@showProductById')->name('productByCategory');
+Route::get('/searchProduct', 'ProductController@search');
+//Category
+Route::resource('category', 'CategoryController');

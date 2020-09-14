@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCostTable extends Migration
+class CreateCapitalTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateCostTable extends Migration
      */
     public function up()
     {
-        Schema::create('cost', function (Blueprint $table) {
-            $table->increments('cost_id');
-            $table->string('origin');
-            $table->string('destination');
-            $table->integer('weight');
-            $table->string('courier');
+        Schema::create('capital', function (Blueprint $table) {
+            $table->increments('capital_id');
+            $table->double('capital');
+            $table->date('date');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateCostTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cost');
+        Schema::dropIfExists('capital');
     }
 }

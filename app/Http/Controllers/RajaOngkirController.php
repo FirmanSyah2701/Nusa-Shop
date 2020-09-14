@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Province;
 use App\City;
-
 use Illuminate\Http\Request;
+
+//guzzle
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 class RajaOngkirController extends Controller
@@ -50,43 +52,25 @@ class RajaOngkirController extends Controller
                 }
             }
         }
-    }
-
-    public function cost(){
-        
-        $client = new Client();
-        $options = [
-            'headers' => [
-                'key'           => '7f4acdf11c42f0677ee7bc41bc4bbb23',
-                'content-Type'  => 'application/x-www-form-urlencoded',
-            ],
-            'form_params'  => [
-                'origin'        => '501',
-                'destination'   => '114',
-                'weight'        => 170,
-                'courier'       => 'jne'
-            ]
-        ];
-        $result = $client->post('https://api.rajaongkir.com/starter/cost', $options);
-        dd(json_decode($result->getBody()));
     } 
 
     public function getCost($destination, $weight, $courier){
-        
         $client = new Client();
         $options = [
             'headers' => [
                 'key'           => '7f4acdf11c42f0677ee7bc41bc4bbb23',
                 'content-Type'  => 'application/x-www-form-urlencoded',
             ],
-            'form_params'  => [
+            'form_params' => [
                 'origin'        => '149',
                 'destination'   => $destination,
                 'weight'        => $weight,
                 'courier'       => $courier
             ]
         ];
-        $result = $client->post('https://api.rajaongkir.com/starter/cost', $options);
-        $response = json_decode($result->getBody());
+        $result      = $client->post('https://api.rajaongkir.com/starter/cost', $options);
+        $response    = json_decode($result->getBody()->getContents(), true);
+        $data_ongkir = $response['rajaongkir'];
+        return response()->json($data_ongkir);
     } 
 }

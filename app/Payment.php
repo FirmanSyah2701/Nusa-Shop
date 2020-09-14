@@ -2,21 +2,18 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $table = 'payemnt';
-    protected $primaryKey = 'payemnt_id';
+    protected $table = 'payment';
+    protected $primaryKey = 'payment_id';
     protected $fillable   = [
-        'payment_id', 'photo', 'customer_id', 'checkout_id', 'validation_id'
+        'payment_id', 'photo', 'checkout_id', 'validation_id', 'date'
     ];
-
-    public $timestamps = false;
     
-    public function customer(){
-        return $this->belongsTo('App\Customer', 'customer_id');
-    }
+    public $timestamps = false;
 
     public function checkout(){
         return $this->belongsTo('App\Checkout', 'checkout_id');
@@ -25,5 +22,5 @@ class Payment extends Model
     public function validation(){
         return $this->belongsTo('App\Validation', 'validation_id');
     }
-
+    
 }

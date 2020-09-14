@@ -13,11 +13,14 @@ class Product extends Model
     ];
 
     protected $keyType = 'string';
-
     public $increments = false;
     public $timestamps = false;
 
     public function category(){
         return $this->belongsTo('App\Category', 'category_id');
+    }
+
+    public function cart(){
+        return $this->hasOne('App\Cart', 'product_code');
     }
 }

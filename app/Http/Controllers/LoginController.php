@@ -1,105 +1,120 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Admin;
+
 use DB;
+use App\Admin;
+use App\Product;
+use App\Payment;
+use App\Customer;
+use App\Category;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-
 class LoginController extends Controller
 {
-    public function showLogin(Request $request){
-        if($request->session()->exists('username')){
+    public function showLoginAdmin(){
+        if(session()->exists('admin')){
             return redirect()->route('dashboard');
         }else{
             return view('admin.login');
         }
     }
 
-    public function showLoginPembeli(Request $request){
-        if($request->session()->exists('username')){
-            return redirect()->route('loginPembeli');
+    public function showLoginCustomer(){
+        if(session()->exists('customer_id')){
+            return redirect()->route('home');
         }else{
             return view('layouts.login');
         }
     }
     
-    public function login(Request $request){
+    public function loginAdmin(Request $request){
         $auth = auth()->guard('admin');
 
-        $credentials = [
-            'username'  => $request->username,
-            'password'  => $request->password,
-        ];
+        $credentials = $request->only('username', 'password');
 
-        $validator = Validator::make($request->all(),[
-                'username'  => 'required|string|exists:admin,username|regex:/^[a-zA-Z ]*$/',
-                'password'  => 'required|string',
-            ], 
-            [
-                'username.required'  => 'Username tidak boleh kosong',
-                'username.exists'    => 'Username salah',
-                'password.required'  => 'Password tidak boleh kosong',
-                'username.regex'     => 'Format username salah'
-            ],
+        $validator = Validator::make([
+            'username'  => 'required|string|exists:admin,username',
+            'password'  => 'required|string',
+        ], 
+        [
+            'username.required'  => 'Username tidak boleh kosong',
+            'username.exists'    => 'Username salah',
+            'password.required'  => 'Password tidak boleh kosong'
+        ]
         );
 
         if($validator->fails()) {
-            return view('admin.login')->withErrors($validator);
+            return redirect()->back()->withErrors($validator);
         }else{
             if($auth->attempt($credentials)){
-                $name  = DB::table('admin')->where('username', $request->username)->value('name');
-                Session::put('username', $request->username);
-                return view('admin.dashboard', compact('name'));
+                $name  = Admin::whereUsername($request->username)->value('name');
+                session()->put('admin', $request->username);
+                
+                $customers  = Customer::count();
+                $payment    = Payment::whereValidationId(3)->count();
+                $profit     = DB::table('payment')
+                                ->join('checkout', 'checkout.checkout_id', '=', 'payment.checkout_id')
+                                ->where('payment.validation_id', 3)
+                                ->sum('checkout.total_price');
+                return view('admin.dashboard', compact('name', 'customers', 'payment', 'profit'));
+            }else{
+                return redirect()->back()
+                    ->withInput($request->input())
+                    ->withErrors(
+                        ['password' => 'password anda salah']
+                    );
             }
         }
-    }
-
-    public function showLoginCustomer(Request $request){
-        return view('layouts.login');
     }
     
     public function loginCustomer(Request $request){
         $auth = auth()->guard('customers');
 
-        $credentials = [
-            'username'  => $request->username,
-            'password'  => $request->password,
-        ];
+        $credentials = $request->only('username', 'password');
 
         $validator = Validator::make($request->all(),[
                 'username'  => 'required|exists:customers,username',
-                'password'  => 'required|string',
+                'password'  => 'required',
             ], 
             [
                 'username.required'  => 'Username tidak boleh kosong',
                 'username.exists'    => 'Username salah',
+                'password.confirmed' => 'Password salah',
                 'password.required'  => 'Password tidak boleh kosong',
-                'username.regex'     => 'Format username salah'
-            ],
+            ]
         );
 
         if($validator->fails()) {
-            return view('layouts.login')->withErrors($validator);
+            return redirect()
+                ->back()
+                ->withErrors($validator);
         }else{
             if($auth->attempt($credentials)){
-                $name  = DB::table('customers')->where('username', $request->username)->value('name');
-                Session::put('username', $request->username);
-                return view('layouts.index', compact('name'));
+                $products   = Product::all();
+                $count      = Product::sum('qty');
+                $customer   = Customer::whereUsername($request->username)->value('customer_id');
+                $categories = Category::all();
+                session()->put('customer_id', $customer);
+                return view('layouts.index', compact('products', 'customer', 'count', 'categories'));
+            }else{
+                return redirect()
+                    ->back()
+                    ->withErrors(
+                        ['password' => 'password anda salah']
+                    );
             }
         }
     }
 
-    public function logout(Request $request){
-        $request->session()->forget('username');
+    public function logoutAdmin(Request $request){
+        $request->session()->forget('admin');
         return redirect()->route('loginAdmin');
     }
 
-    public function logoutPembeli(Request $request){
-        $request->session()->forget('username');
-        return redirect()->route('loginPembeli');
+    public function logoutCustomer(Request $request){
+        $request->session()->forget('customer_id');
+        return redirect()->route('home');
     }
 }

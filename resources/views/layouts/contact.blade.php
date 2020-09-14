@@ -16,15 +16,17 @@
     <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
 </head>
 <body>
+    
     <div class="container">
         <div style="margin-top:120px;">
             <div class="card">
             <div class="card-body">
-                    Terima kasih sudah berbelanja, jika anda ada kendala atau ingin bertanya-tanya hubungi: <br>
-                    083107367831
-                    <div style="margin-top:50px;">
-                        <a href="{{url('/')}}" class="btn btn-sm btn-main">kembali</a>
-                    </div>
+                Terima kasih sudah berbelanja, jika anda ada kendala atau ingin bertanya-tanya hubungi: <br>
+                083107367831
+                <div style="margin-top:50px;">
+                    <a href="{{url('/')}}" class="btn btn-sm btn-main">kembali ke beranda</a>
+                    <a href="{{route('riwayatCheckout')}}">Upload bukti pembayaran</a>
+                </div>
             </div>
         </div>
     </div>

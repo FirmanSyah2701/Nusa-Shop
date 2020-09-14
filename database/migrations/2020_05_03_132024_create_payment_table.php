@@ -17,11 +17,10 @@ class CreatePaymentTable extends Migration
             $table->increments('payment_id', 4);
             $table->integer('checkout_id')->unsigned();
             $table->foreign('checkout_id')->references('checkout_id')->on('checkout');
-            $table->integer('customer_id')->unsigned();
-            $table->foreign('customer_id')->references('customer_id')->on('customers');
             $table->integer('validation_id')->unsigned();
             $table->foreign('validation_id')->references('validation_id')->on('validations');
-            $table->string('photo', 255);
+            $table->string('photo', 255)->nullable();
+            $table->date('date');
         });
     }
 

@@ -15,7 +15,7 @@ class CreateValidationsTable extends Migration
     {
         Schema::create('validations', function (Blueprint $table) {
             $table->increments('validation_id', 4);
-            $table->string('status', 50);
+            $table->string('validation', 50);
         });
     }
 

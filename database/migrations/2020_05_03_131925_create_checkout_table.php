@@ -15,14 +15,16 @@ class CreateCheckoutTable extends Migration
     {
         Schema::create('checkout', function (Blueprint $table) {
             $table->increments('checkout_id');
-            $table->string('product_code')->index();
-            $table->foreign('product_code')->references('product_code')->on('products');
+            $table->integer('cart_id')->unsigned();
+            $table->foreign('cart_id')->references('cart_id')->on('cart');
             $table->integer('city_id')->unsigned();
             $table->foreign('city_id')->references('city_id')->on('city');
-            //$table->double('price_courier');
             $table->string('courier');
+            $table->string('service');
+            $table->string('etd');
             $table->string('customer_name');
             $table->string('full_address');
+            $table->string('number_phone');
             $table->double('total_price');
         });
     }

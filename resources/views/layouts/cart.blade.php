@@ -24,54 +24,64 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Image</th>
-                            <th class="text-center">Product</th>
-                            <th>Jumlah</th>
-                            <th>Action</th>
+                            <th>Foto barang</th>
+                            <th class="text-center">Nama barang</th>
+                            <th>Jumlah barang yang dibeli</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="product-thumb">
-                                <img width="80px" height="auto" src="images/products/products-1.jpg" alt="image description"></td>
-                            <td class="product-details">
-                                <h3 class="title" style="margin-left:170px;">Macbook Pro 15inch</h3>
-                            </td>
-                            <td class="product-category"><span class="categories">Laptops</span></td>
-                            <td class="action" data-title="Action">
-                                <input type="checkbox" name="" id="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="product-thumb">
-                                <img width="80px" height="auto" src="images/products/products-1.jpg" alt="image description"></td>
-                            <td class="product-details">
-                                <h3 class="title" style="margin-left:170px;">Macbook Pro 15inch</h3>
-                            </td>
-                            <td class="product-category"><span class="categories">Laptops</span></td>
-                            <td class="action" data-title="Action">
-                                <input type="checkbox" name="" id="">
-                            </td>
-                        </tr>
+                        @foreach($datas as $data)
+                            <tr>
+                                <td class="product-thumb">
+                                    <img class="hvr-pulse img-responsive" 
+                                        src="{{url('/assets/img/product/', $data->product->photo)}}" 
+                                        style="width: 120px;">
+                                </td>
+                                <td class="product-details">
+                                    <h4 class="title" style="margin-left:140px;">{{ $data->product->product_name }}</h4>
+                                </td>
+                                <td class="product-category">
+                                    <input type="number" value="{{ $data->qty }}" readonly>
+                                </td>
+                                <td class="action" data-title="Action">
+                                    <form action="{{route('deleteItem', $data->cart_id)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach     
                     </tbody>
                 </table>
-                Sub total: <p>
-                <a href="{{url('checkout')}}" class="btn btn-main">Checkout</a>
+                <p style="color: black"> Sub total:  @currency($subTotal)  <p>
+                
+                <form action="{{ route('showCheckout')}}" method="get">
+                    @if(count($datas) > 0)
+                        <button class="btn btn-main">Checkout</button>
+                    @endif
+                    <a style="color: #ffff;" class="btn btn-danger" href="/">
+                        Kembali
+                    </a>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<script src="{{asset('js/app.js')}}"></script>
-  <script src="{{url('assets/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
-  <script src="{{url('assets/plugins/tether/js/tether.min.js')}}"></script>
-  <script src="{{url('assets/plugins/raty/jquery.raty-fa.js')}}"></script>
-  <script src="{{url('assets/plugins/bootstrap/dist/js/popper.min.js')}}"></script>
-  <script src="{{url('assets/plugins/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js')}}"></script>
-  <script src="{{url('assets/plugins/slick-carousel/slick/slick.min.js')}}"></script>
-  <script src="{{url('assets/plugins/jquery-nice-select/js/jquery.nice-select.min.js')}}"></script>
-  <script src="{{url('assets/plugins/fancybox/jquery.fancybox.pack.js')}}"></script>
-  <script src="{{url('assets/plugins/smoothscroll/SmoothScroll.min.js')}}"></script>
-  <script src="{{url('assets/js/scripts.js')}}"></script>
+    <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{url('assets/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+    <script src="{{url('assets/plugins/tether/js/tether.min.js')}}"></script>
+    <script src="{{url('assets/plugins/raty/jquery.raty-fa.js')}}"></script>
+    <script src="{{url('assets/plugins/bootstrap/dist/js/popper.min.js')}}"></script>
+    <script src="{{url('assets/plugins/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js')}}"></script>
+    <script src="{{url('assets/plugins/slick-carousel/slick/slick.min.js')}}"></script>
+    <script src="{{url('assets/plugins/jquery-nice-select/js/jquery.nice-select.min.js')}}"></script>
+    <script src="{{url('assets/plugins/fancybox/jquery.fancybox.pack.js')}}"></script>
+    <script src="{{url('assets/plugins/smoothscroll/SmoothScroll.min.js')}}"></script>
+    <script src="{{url('assets/js/scripts.js')}}"></script>
   
 </body>
 </html>

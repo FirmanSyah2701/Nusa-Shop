@@ -14,12 +14,9 @@ class CreateCartTable extends Migration
     public function up()
     {
         Schema::create('cart', function (Blueprint $table) {
-            $table->increments('cart_id', 4);
-            $table->string('product_code')->index();
-            $table->foreign('product_code')->references('product_code')->on('products');
-            $table->integer('customer_id')->unsigned();
+            $table->increments('cart_id');
+            $table->integer('customer_id')->nullable()->unsigned();
             $table->foreign('customer_id')->references('customer_id')->on('customers');
-            $table->double('subtotal');
         });
     }
 
