@@ -66,7 +66,8 @@ class RajaOngkirController extends Controller
         return response()->json(['message' => 'success']);
     } 
 
-    public function getCost($destination, $weight, $courier){
+    public function getCost($destination, $weight, $courier)
+    {
         $client = new Client();
         $options = [
             'headers' => [
