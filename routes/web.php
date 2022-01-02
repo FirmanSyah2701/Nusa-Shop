@@ -55,7 +55,7 @@ Route::get('pembayaran/save/{id}', 'PaymentController@download')->name('download
 Route::get('penjualan', 'PaymentController@sell');
 
 //  RajaOngkir
-Route::get('/api/provinsi', 'RajaOngkirController@apiRajaOngkir');
+Route::get('/rajaongkir/getProvince&City', 'RajaOngkirController@store');
 Route::get('/destination={destination}&weight={weight}&courier={courier}', 'RajaOngkirController@getCost');
 
 //  Product
